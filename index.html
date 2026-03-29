@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAKSEL GLOBAL | World-Class Logistics Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #050a18;
+            --accent: #ff4d00;
+            --gold: #d4af37;
+            --text-gray: #94a3b8;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--primary);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ========== SCROLL REVEAL ========== */
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
+
+        /* ========== HEADER ========== */
+        header {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            padding: 30px 8%; display: flex; justify-content: space-between; align-items: center;
+            transition: 0.5s;
+        }
+        header.scrolled {
+            background: rgba(5, 10, 24, 0.98);
+            padding: 15px 8%;
+            border-bottom: 1px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .logo { font-size: 30px; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav a { text-decoration: none; color: var(--white); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; position: relative; padding-bottom: 4px; }
+        nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent); transition: 0.3s; }
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--accent); }
+
+        /* ========== HERO ========== */
+        .hero {
+            height: 100vh;
+            display: flex; align-items: center; padding: 0 8%;
+            background: linear-gradient(rgba(5, 10, 24, 0.85), rgba(5, 10, 24, 0.5)),
+                        url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-attachment: fixed; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 80% 50%, rgba(255,77,0,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.4);
+            padding: 10px 22px; border-radius: 50px; margin-bottom: 30px;
+            font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+            animation: pulse-border 2.5s infinite;
+        }
+        @keyframes pulse-border { 0%,100% { box-shadow: 0 0 0 0 rgba(255,77,0,0.3); } 50% { box-shadow: 0 0 0 10px rgba(255,77,0,0); } }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(45px, 7vw, 90px);
+            line-height: 1.05; margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-content p { font-size: 18px; color: var(--text-gray); max-width: 600px; line-height: 1.8; margin-bottom: 40px; }
+        .hero-buttons { display: flex; gap: 20px; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--accent); color: white; padding: 20px 50px; border-radius: 8px;
+            text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 14px; transition: 0.3s; display: inline-block; position: relative; overflow: hidden;
+        }
+        .btn-primary::before { content: ''; position: absolute; inset: 0; background: white; transform: scaleX(0); transform-origin: left; transition: 0.4s; z-index: 0; }
+        .btn-primary:hover::before { transform: scaleX(1); }
+        .btn-primary:hover { color: var(--accent); }
+        .btn-primary span { position: relative; z-index: 1; }
+        .btn-whatsapp-hero {
+            background: transparent; border: 2px solid #25d366; color: #25d366; padding: 20px 50px; border-radius: 8px;
+            text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 14px; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-whatsapp-hero:hover { background: #25d366; color: white; }
+
+        /* Animated ship icon */
+        .hero-ship {
+            position: absolute; right: 6%; bottom: 15%; opacity: 0.06; font-size: 300px;
+            animation: drift 12s ease-in-out infinite;
+        }
+        @keyframes drift { 0%,100% { transform: translateX(0) rotate(-3deg); } 50% { transform: translateX(30px) rotate(2deg); } }
+
+        /* ========== DASHBOARD STATS ========== */
+        .dashboard {
+            padding: 80px 8%; background: var(--accent);
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; text-align: center;
+        }
+        .dash-item h2 { font-size: 60px; font-weight: 800; margin-bottom: 5px; }
+        .dash-item p { text-transform: uppercase; letter-spacing: 3px; font-weight: 600; font-size: 13px; }
+        .dash-item { position: relative; }
+        .dash-item::after { content: ''; position: absolute; right: 0; top: 20%; height: 60%; width: 1px; background: rgba(255,255,255,0.25); }
+        .dash-item:last-child::after { display: none; }
+
+        /* ========== NETWORK ========== */
+        .network { padding: 120px 8%; text-align: center; position: relative; overflow: hidden; }
+        .network-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 50px; }
+        .tag {
+            padding: 15px 30px; border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px; background: var(--glass);
+            font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 13px;
+            animation: float 4s infinite ease-in-out;
+            transition: 0.3s; cursor: default;
+        }
+        .tag:nth-child(even) { animation-delay: 1s; }
+        .tag:nth-child(3n) { animation-delay: 2s; }
+        .tag:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-8px) scale(1.05) !important; }
+        @keyframes float { 0%,100% { transform: translateY(0); border-color: rgba(255,255,255,0.15); } 50% { transform: translateY(-15px); border-color: var(--accent); } }
+
+        /* ========== SERVICES SECTION ========== */
+        .services { padding: 120px 8%; background: #020610; }
+        .section-label { text-align: center; color: var(--accent); letter-spacing: 8px; font-size: 12px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; }
+        .section-title { text-align: center; font-family: 'Playfair Display'; font-size: 50px; margin-bottom: 70px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px; padding: 45px 35px; transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .service-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,77,0,0.05), transparent); opacity: 0; transition: 0.4s; }
+        .service-card:hover { transform: translateY(-10px); border-color: rgba(255,77,0,0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .service-card:hover::before { opacity: 1; }
+        .service-icon { font-size: 48px; color: var(--accent); margin-bottom: 25px; display: block; transition: 0.4s; }
+        .service-card:hover .service-icon { transform: scale(1.15) rotate(-5deg); }
+        .service-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; }
+        .service-card p { color: var(--text-gray); line-height: 1.8; font-size: 15px; }
+
+        /* ========== INDUSTRIES ========== */
+        .industries { padding: 120px 8%; }
+        .ind-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 60px; }
+        .ind-box { position: relative; height: 450px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .ind-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .ind-box:hover img { transform: scale(1.1); filter: brightness(0.2); }
+        .ind-content {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px;
+            background: linear-gradient(transparent, rgba(2, 6, 16, 0.95)); transition: 0.4s;
+        }
+        .ind-box:hover .ind-content { transform: translateY(-20px); }
+        .ind-content h3 { font-size: 30px; font-family: 'Playfair Display'; color: var(--accent); margin-bottom: 15px; }
+        .ind-content p { font-size: 16px; color: var(--text-gray); opacity: 0; transition: 0.4s; }
+        .ind-box:hover .ind-content p { opacity: 1; }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials { padding: 120px 8%; background: #020610; overflow: hidden; }
+        .testi-wrapper { position: relative; margin-top: 70px; }
+        .testi-track-outer { overflow: hidden; border-radius: 20px; }
+        .testi-track { display: flex; gap: 30px; transition: transform 0.7s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .testi-card {
+            min-width: calc(33.333% - 20px); background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07); border-radius: 24px;
+            padding: 50px 40px; position: relative; overflow: hidden; flex-shrink: 0;
+            transition: 0.4s;
+        }
+        .testi-card::before {
+            content: '\201C'; font-family: 'Playfair Display'; font-size: 150px; color: var(--accent);
+            opacity: 0.08; position: absolute; top: -20px; left: 20px; line-height: 1;
+        }
+        .testi-card:hover { border-color: rgba(255,77,0,0.3); transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .testi-stars { color: var(--gold); font-size: 18px; margin-bottom: 25px; letter-spacing: 4px; }
+        .testi-text { font-size: 17px; color: var(--text-gray); line-height: 1.9; margin-bottom: 35px; font-style: italic; position: relative; z-index: 1; }
+        .testi-author { display: flex; align-items: center; gap: 20px; }
+        .testi-avatar {
+            width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #ff8800);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: 800; color: white; flex-shrink: 0;
+        }
+        .testi-name { font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+        .testi-role { color: var(--text-gray); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+        .testi-country { color: var(--accent); font-size: 13px; font-weight: 600; }
+
+        /* Testi Navigation */
+        .testi-nav { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 50px; }
+        .testi-btn {
+            width: 55px; height: 55px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15);
+            background: transparent; color: white; font-size: 20px; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .testi-btn:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+        .testi-dots { display: flex; gap: 10px; }
+        .testi-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: 0.3s; }
+        .testi-dot.active { background: var(--accent); width: 30px; border-radius: 5px; }
+
+        /* Auto-scroll marquee strip */
+        .testi-marquee { overflow: hidden; margin-top: 60px; padding: 20px 0; }
+        .testi-marquee-inner { display: flex; gap: 30px; animation: marquee 30s linear infinite; white-space: nowrap; }
+        .testi-marquee-inner:hover { animation-play-state: paused; }
+        .marquee-item {
+            display: inline-flex; align-items: center; gap: 15px; padding: 15px 30px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 50px; white-space: nowrap; flex-shrink: 0;
+        }
+        .marquee-item i { color: var(--accent); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ========== PROCESS TIMELINE ========== */
+        .process { padding: 120px 8%; }
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 70px; position: relative; }
+        .process-steps::before { content: ''; position: absolute; top: 40px; left: 10%; right: 10%; height: 2px; background: linear-gradient(to right, transparent, var(--accent), transparent); z-index: 0; }
+        .step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+        .step-num {
+            width: 80px; height: 80px; border-radius: 50%; background: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 800; margin: 0 auto 25px; position: relative;
+            box-shadow: 0 0 0 10px rgba(255,77,0,0.1), 0 0 0 20px rgba(255,77,0,0.05);
+            animation: step-pulse 3s infinite;
+        }
+        .step:nth-child(2) .step-num { animation-delay: 0.5s; }
+        .step:nth-child(3) .step-num { animation-delay: 1s; }
+        .step:nth-child(4) .step-num { animation-delay: 1.5s; }
+        .step:nth-child(5) .step-num { animation-delay: 2s; }
+        @keyframes step-pulse {
+            0%,100% { box-shadow: 0 0 0 10px rgba(255,77,0,0.1), 0 0 0 20px rgba(255,77,0,0.05); }
+            50% { box-shadow: 0 0 0 15px rgba(255,77,0,0.15), 0 0 0 30px rgba(255,77,0,0); }
+        }
+        .step h4 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+        .step p { color: var(--text-gray); font-size: 14px; line-height: 1.7; }
+
+        /* ========== FOUNDER ========== */
+        .founder { padding: 150px 8%; display: flex; align-items: center; gap: 100px; flex-wrap: wrap; background: #020610; }
+        .founder-img { flex: 1; min-width: 350px; position: relative; }
+        .founder-img img { width: 100%; border-radius: 15px; box-shadow: 40px 40px 0 var(--accent); border: 1px solid rgba(255,255,255,0.1); }
+        .founder-info { flex: 1.2; }
+        .founder-info h2 { font-family: 'Playfair Display', serif; font-size: 55px; margin-bottom: 20px; }
+        .founder-info h4 { color: var(--accent); text-transform: uppercase; letter-spacing: 6px; margin-bottom: 40px; font-size: 13px; }
+        .founder-info p { font-size: 18px; color: var(--text-gray); line-height: 1.9; margin-bottom: 20px; }
+        .founder-contact {
+            margin-top: 40px; border-left: 5px solid var(--accent); padding-left: 30px;
+        }
+        .founder-contact .phone { color: white; font-weight: 700; font-size: 24px; margin-bottom: 8px; }
+        .founder-contact .email { letter-spacing: 2px; color: var(--text-gray); font-size: 14px; margin-bottom: 20px; }
+        .founder-whatsapp {
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #25d366; color: white; padding: 14px 30px; border-radius: 8px;
+            text-decoration: none; font-weight: 700; letter-spacing: 1px; font-size: 15px;
+            transition: 0.3s; margin-top: 10px;
+        }
+        .founder-whatsapp:hover { background: #1db954; transform: scale(1.05); box-shadow: 0 10px 30px rgba(37,211,102,0.3); }
+
+        /* ========== CONTACT ========== */
+        .contact { padding: 120px 8%; }
+        .contact-inner {
+            background: linear-gradient(135deg, #0a1128, #050a18); padding: 80px;
+            border-radius: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .contact-info h2 { font-family: 'Playfair Display'; font-size: 46px; margin-bottom: 25px; }
+        .contact-info p { color: var(--text-gray); font-size: 18px; line-height: 1.8; margin-bottom: 40px; }
+        .contact-detail { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+        .contact-detail i { color: var(--accent); font-size: 20px; width: 24px; }
+        .contact-detail span { color: var(--text-gray); font-size: 16px; }
+        .whatsapp-direct {
+            display: flex; align-items: center; gap: 15px;
+            background: linear-gradient(135deg, rgba(37,211,102,0.12), rgba(37,211,102,0.05));
+            border: 1px solid rgba(37,211,102,0.3); border-radius: 14px;
+            padding: 22px 28px; text-decoration: none; color: #25d366; margin-top: 30px;
+            transition: 0.3s; font-weight: 700; font-size: 16px;
+        }
+        .whatsapp-direct:hover { background: linear-gradient(135deg, rgba(37,211,102,0.25), rgba(37,211,102,0.1)); transform: scale(1.02); box-shadow: 0 10px 30px rgba(37,211,102,0.15); }
+        .whatsapp-direct i { font-size: 30px; animation: wa-ring 2s infinite; }
+        @keyframes wa-ring { 0%,100% { transform: rotate(0); } 15% { transform: rotate(15deg); } 30% { transform: rotate(-12deg); } 45% { transform: rotate(8deg); } 60% { transform: rotate(0); } }
+        .form-group { position: relative; margin-bottom: 22px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 22px 20px 10px; background: #020610; border: 1px solid #1e293b;
+            color: white; border-radius: 12px; font-family: inherit; font-size: 16px; outline: none; transition: 0.3s;
+            appearance: none;
+        }
+        .form-group select option { background: #020610; }
+        .form-group label {
+            position: absolute; left: 20px; top: 18px; color: var(--text-gray); font-size: 14px;
+            transition: 0.3s; pointer-events: none; letter-spacing: 1px;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,77,0,0.1); }
+        .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:focus + label, .form-group textarea:not(:placeholder-shown) + label {
+            top: 6px; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+        }
+        .form-group textarea { resize: none; }
+        .form-group input::placeholder, .form-group textarea::placeholder { opacity: 0; }
+        .btn-submit {
+            background: var(--accent); color: white; width: 100%; padding: 22px; border: none;
+            border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 3px; font-size: 15px; font-family: inherit;
+            position: relative; overflow: hidden;
+        }
+        .btn-submit::before { content: ''; position: absolute; inset: 0; background: white; transform: scaleX(0); transform-origin: left; transition: 0.4s; }
+        .btn-submit:hover::before { transform: scaleX(1); }
+        .btn-submit:hover { color: var(--accent); }
+        .btn-submit span { position: relative; z-index: 1; }
+
+        /* Success modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal-overlay.show { display: flex; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-box {
+            background: linear-gradient(135deg, #0a1128, #050a18); border: 1px solid rgba(255,77,0,0.3);
+            border-radius: 30px; padding: 60px; text-align: center; max-width: 500px; width: 90%;
+            animation: slideUp 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-icon { font-size: 70px; color: #25d366; margin-bottom: 20px; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        .modal-box h3 { font-family: 'Playfair Display'; font-size: 32px; margin-bottom: 15px; }
+        .modal-box p { color: var(--text-gray); font-size: 16px; line-height: 1.8; margin-bottom: 30px; }
+        .modal-wa-btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #25d366; color: white; padding: 18px 40px; border-radius: 12px;
+            text-decoration: none; font-weight: 800; letter-spacing: 2px; font-size: 15px;
+            text-transform: uppercase; transition: 0.3s; margin-bottom: 15px; width: 100%; justify-content: center;
+        }
+        .modal-wa-btn:hover { background: #1db954; transform: scale(1.03); }
+        .modal-close { background: none; border: 1px solid rgba(255,255,255,0.15); color: white; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; transition: 0.3s; width: 100%; letter-spacing: 2px; }
+        .modal-close:hover { background: rgba(255,255,255,0.05); }
+
+        /* ========== FLOATING WHATSAPP ========== */
+        .whatsapp {
+            position: fixed; bottom: 40px; right: 40px; width: 80px; height: 80px;
+            background: #25d366; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 40px;
+            box-shadow: 0 10px 30px rgba(37,211,102,0.4); z-index: 1000; text-decoration: none; transition: 0.3s;
+        }
+        .whatsapp::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%; background: #25d366;
+            animation: wa-pulse 2.5s infinite;
+        }
+        @keyframes wa-pulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.8); opacity: 0; } }
+        .whatsapp i { position: relative; z-index: 1; }
+        .whatsapp:hover { transform: scale(1.12) rotate(8deg); box-shadow: 0 20px 50px rgba(37,211,102,0.5); }
+        .whatsapp-tooltip {
+            position: absolute; right: 100%; margin-right: 15px; background: white; color: #050a18;
+            padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; white-space: nowrap;
+            opacity: 0; transform: translateX(10px); transition: 0.3s; pointer-events: none;
+        }
+        .whatsapp:hover .whatsapp-tooltip { opacity: 1; transform: translateX(0); }
+
+        /* ========== FOOTER ========== */
+        footer {
+            padding: 60px 8%; border-top: 1px solid #1e293b; 
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+        footer p { color: var(--text-gray); font-size: 14px; }
+        .footer-socials { display: flex; gap: 20px; }
+        .footer-social { width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: var(--text-gray); text-decoration: none; transition: 0.3s; font-size: 16px; }
+        .footer-social:hover { background: var(--accent); border-color: var(--accent); color: white; transform: translateY(-3px); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .testi-card { min-width: calc(50% - 15px); }
+            .contact-inner { grid-template-columns: 1fr; gap: 50px; padding: 40px; }
+            .founder { flex-direction: column; gap: 60px; }
+            .hero-content h1 { font-size: 55px; }
+            .process-steps::before { display: none; }
+        }
+        @media (max-width: 768px) {
+            .testi-card { min-width: calc(100%); }
+            nav { display: none; }
+            .hero-ship { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header id="nav">
+        <a href="#" class="logo">MAKSEL<span>.GLOBAL</span></a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#industries">Expertise</a></li>
+                <li><a href="#testimonials">Clients</a></li>
+                <li><a href="#founder">Director</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <i class="fas fa-ship hero-ship"></i>
+        <div class="hero-content">
+            <div class="hero-badge reveal"><i class="fas fa-globe"></i> 52+ Countries | Est. Coimbatore, India</div>
+            <h1 class="reveal">MAKSEL GLOBAL<br>LOGISTICS:<br><em>Beyond Borders.</em></h1>
+            <p class="reveal">Reliable, local expertise with a global reach. Connecting South Indian industries to the world with absolute precision, speed, and trust.</p>
+            <div class="hero-buttons reveal">
+                <a href="#contact" class="btn-primary"><span>GET DIRECT QUOTE</span></a>
+                <a href="https://wa.me/919600440850?text=Hello%20Murali%2C%20I%20would%20like%20to%20enquire%20about%20your%20logistics%20services." target="_blank" class="btn-whatsapp-hero"><i class="fab fa-whatsapp"></i> WhatsApp Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD STATS -->
+    <section class="dashboard" id="dashboard">
+        <div class="dash-item reveal">
+            <h2 class="counter" data-target="52">0</h2>
+            <p>Countries Connected</p>
+        </div>
+        <div class="dash-item reveal">
+            <h2 class="counter" data-target="150">0</h2>
+            <p>Global Strategic Partners</p>
+        </div>
+        <div class="dash-item reveal">
+            <h2 class="counter" data-target="12000">0</h2>
+            <p>Deliveries Completed</p>
+        </div>
+        <div class="dash-item reveal">
+            <h2 class="counter" data-target="99">0</h2>
+            <p>% Success Rate</p>
+        </div>
+    </section>
+
+    <!-- GLOBAL NETWORK -->
+    <section class="network reveal">
+        <h2 style="font-family: 'Playfair Display'; font-size: 50px;">Our Global Partner Footprint</h2>
+        <p style="color: var(--text-gray); margin-top: 20px; font-size: 18px;">Strategically positioned across key trade corridors worldwide.</p>
+        <div class="network-tags">
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>United Arab Emirates</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>United States</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Singapore</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Germany</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>United Kingdom</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Australia</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Netherlands</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Saudi Arabia</span>
+            <span class="tag"><i class="fas fa-plane" style="color:var(--accent); margin-right:8px;"></i>Vietnam</span>
+            <span class="tag"><i class="fas fa-ship" style="color:var(--accent); margin-right:8px;"></i>Japan</span>
+            <span class="tag"><i class="fas fa-ship" style="color:var(--accent); margin-right:8px;"></i>South Korea</span>
+            <span class="tag"><i class="fas fa-ship" style="color:var(--accent); margin-right:8px;"></i>Canada</span>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+        <p class="section-label reveal">What We Offer</p>
+        <h2 class="section-title reveal">End-to-End Logistics Solutions</h2>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <i class="fas fa-ship service-icon"></i>
+                <h3>Sea Freight</h3>
+                <p>FCL & LCL shipments to all major global ports. Competitive rates with real-time cargo tracking and documentation support.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-plane-departure service-icon"></i>
+                <h3>Air Freight</h3>
+                <p>Time-critical cargo handled with precision. Express and consolidated air services to over 52 countries.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-file-contract service-icon"></i>
+                <h3>Customs Clearance</h3>
+                <p>Certified customs broking. We handle all import/export documentation, HS codes, and duty optimization seamlessly.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-warehouse service-icon"></i>
+                <h3>Warehousing & 3PL</h3>
+                <p>Secure bonded and open warehousing in Coimbatore with inventory management and last-mile distribution.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-truck service-icon"></i>
+                <h3>Inland Transport</h3>
+                <p>Dedicated trailers and FTL/LTL road freight from factory floors to Chennai, Tuticorin, and Bangalore ports.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-shield-alt service-icon"></i>
+                <h3>Cargo Insurance</h3>
+                <p>Comprehensive marine cargo insurance coverage tailored to protect your high-value industrial shipments globally.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section class="industries reveal" id="industries">
+        <p class="section-label">Core Sectors</p>
+        <h2 class="section-title">Industries We Empower</h2>
+        <div class="ind-grid">
+            <div class="ind-box reveal">
+                <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=2000" alt="Textiles">
+                <div class="ind-content">
+                    <h3>Textiles & Apparel</h3>
+                    <p>Expert logistics for South India's garment exports. Hanger-ready condition and moisture-proof shipping to global retail hubs.</p>
+                </div>
+            </div>
+            <div class="ind-box reveal">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000" alt="Machinery">
+                <div class="ind-content">
+                    <h3>Heavy Engineering</h3>
+                    <p>Transporting oversized pumps, motors, and industrial machinery with specialized lashing and heavy-lift haulage expertise.</p>
+                </div>
+            </div>
+            <div class="ind-box reveal">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000" alt="Electronics">
+                <div class="ind-content">
+                    <h3>High-Tech Electronics</h3>
+                    <p>Secure, anti-static, and shock-proof shipping for sensitive electronic components across global assembly lines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS TIMELINE -->
+    <section class="process" id="process">
+        <p class="section-label reveal">How It Works</p>
+        <h2 class="section-title reveal">Your Shipment Journey</h2>
+        <div class="process-steps">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <h4>Enquiry</h4>
+                <p>Submit details via form or WhatsApp directly to Murali A.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">02</div>
+                <h4>Quote</h4>
+                <p>Receive a competitive, transparent quote within 2 hours.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">03</div>
+                <h4>Booking</h4>
+                <p>We handle carrier booking, space reservation & documentation.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">04</div>
+                <h4>Pickup & Pack</h4>
+                <p>Factory pickup, professional packing & stuffing managed.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">05</div>
+                <h4>Delivery</h4>
+                <p>Real-time tracking until safe arrival at destination port.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <p class="section-label reveal">Client Trust</p>
+        <h2 class="section-title reveal">What Our Partners Say</h2>
+
+        <div class="testi-wrapper">
+            <div class="testi-track-outer reveal">
+                <div class="testi-track" id="testiTrack">
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Maksel Global handled our first international shipment to Germany with absolute professionalism. The documentation, customs clearance, and delivery timeline were flawless. Murali personally followed up at every stage — that level of dedication is rare."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">RK</div>
+                            <div>
+                                <div class="testi-name">Rajesh Kumar</div>
+                                <div class="testi-role">MD, Precision Pumps Pvt. Ltd.</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Coimbatore → Frankfurt, Germany</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"We were struggling with delayed shipments from our previous forwarder. Switching to Maksel was the best business decision we made. Our textile exports to the UAE now leave on schedule, every single time. Highly recommend."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">PS</div>
+                            <div>
+                                <div class="testi-name">Priya Sundarajan</div>
+                                <div class="testi-role">Director, Sri Textiles Export</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Tirupur → Dubai, UAE</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Shipping heavy CNC machinery overseas requires expert handling. Maksel not only managed the lashing and load planning perfectly, but also saved us 18% on freight costs compared to our previous agent. Truly a strategic partner."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">VN</div>
+                            <div>
+                                <div class="testi-name">Venkat Nair</div>
+                                <div class="testi-role">CEO, IndoMach Engineering</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Coimbatore → Singapore</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"What sets Maksel apart is their complete transparency in pricing. No hidden charges, no surprises at the destination. Murali is always reachable and gives real answers. Our electronics shipments to the US have been seamless for 2 years."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">AM</div>
+                            <div>
+                                <div class="testi-name">Anand Mohan</div>
+                                <div class="testi-role">COO, TechEdge Components</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Chennai → Houston, USA</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"As a first-time exporter, I was overwhelmed by customs regulations. Maksel's team walked me through every form, HS code, and compliance checklist. We cleared customs in Australia without a single query. Remarkable service."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">SK</div>
+                            <div>
+                                <div class="testi-name">Saravanan K.</div>
+                                <div class="testi-role">Founder, Spice Route Foods</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Coimbatore → Melbourne, Australia</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card">
+                        <div class="testi-stars">★★★★★</div>
+                        <p class="testi-text">"Murali and his team coordinated a time-critical air freight shipment for our pharmaceutical supplies to Riyadh in under 24 hours. The speed and coordination were extraordinary. Maksel is now our exclusive logistics partner."</p>
+                        <div class="testi-author">
+                            <div class="testi-avatar">LR</div>
+                            <div>
+                                <div class="testi-name">Lakshmi Raj</div>
+                                <div class="testi-role">Supply Chain Head, PharmaCore India</div>
+                                <div class="testi-country"><i class="fas fa-map-marker-alt" style="margin-right:5px;font-size:11px;"></i>Bengaluru → Riyadh, Saudi Arabia</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="testi-nav">
+                <button class="testi-btn" id="testiPrev"><i class="fas fa-arrow-left"></i></button>
+                <div class="testi-dots" id="testiDots"></div>
+                <button class="testi-btn" id="testiNext"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Marquee trust strip -->
+        <div class="testi-marquee reveal">
+            <div class="testi-marquee-inner" id="marqueeInner">
+                <div class="marquee-item"><i class="fas fa-check-circle"></i> 99% On-Time Delivery</div>
+                <div class="marquee-item"><i class="fas fa-star"></i> 500+ Happy Exporters</div>
+                <div class="marquee-item"><i class="fas fa-globe"></i> 52 Countries Served</div>
+                <div class="marquee-item"><i class="fas fa-shield-alt"></i> Zero Cargo Loss Record</div>
+                <div class="marquee-item"><i class="fas fa-clock"></i> 24/7 Cargo Tracking</div>
+                <div class="marquee-item"><i class="fas fa-handshake"></i> 150+ Global Partners</div>
+                <div class="marquee-item"><i class="fas fa-award"></i> Trusted Since Inception</div>
+                <div class="marquee-item"><i class="fas fa-check-circle"></i> 99% On-Time Delivery</div>
+                <div class="marquee-item"><i class="fas fa-star"></i> 500+ Happy Exporters</div>
+                <div class="marquee-item"><i class="fas fa-globe"></i> 52 Countries Served</div>
+                <div class="marquee-item"><i class="fas fa-shield-alt"></i> Zero Cargo Loss Record</div>
+                <div class="marquee-item"><i class="fas fa-clock"></i> 24/7 Cargo Tracking</div>
+                <div class="marquee-item"><i class="fas fa-handshake"></i> 150+ Global Partners</div>
+                <div class="marquee-item"><i class="fas fa-award"></i> Trusted Since Inception</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDER -->
+    <section class="founder reveal" id="founder">
+        <div class="founder-img reveal-left">
+            <img src="C:\Users\kaviy\Downloads\Gemini_Generated_Image_2r25wu2r25wu2r25.png" alt="Murali A. - MD">
+        </div>
+        <div class="founder-info reveal-right">
+            <h4>Strategic Leadership</h4>
+            <h2>Murali A.</h2>
+            <p>Driven by the vision of making global trade accessible to every Coimbatore-based manufacturer, Murali A. has established Maksel Global as a premier name in international freight.</p>
+            <p>His hands-on approach ensures that every shipment — whether high-tech components or bulk industrial goods — follows a strategic path of safety and speed.</p>
+            <blockquote style="border-left: 4px solid var(--accent); padding-left: 25px; margin: 25px 0; font-style: italic; color: white; font-size: 20px; font-family: 'Playfair Display';">
+                "We don't just move boxes; we carry the growth of your company in our hands."
+            </blockquote>
+            <div class="founder-contact">
+                <p class="phone">+91 96004 40850</p>
+                <p class="email">murali@maksel.in</p>
+                <a href="https://wa.me/919600440850?text=Hello%20Murali%20Sir%2C%20I%20would%20like%20to%20discuss%20logistics%20for%20my%20cargo." target="_blank" class="founder-whatsapp">
+                    <i class="fab fa-whatsapp" style="font-size:24px;"></i>
+                    Message Murali on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact reveal" id="contact">
+        <div class="contact-inner">
+            <div class="contact-info">
+                <h2>Secure Your Strategy</h2>
+                <p>Enquiries reach Murali A. directly. Experience executive-level logistics consultation with a personal guarantee on every quote.</p>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Coimbatore HQ, Tamil Nadu, India</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <span>murali@maksel.in</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-phone"></i>
+                    <span>+91 96004 40850</span>
+                </div>
+                <a href="https://wa.me/919600440850?text=Hello%20Murali%2C%20I%20have%20a%20logistics%20enquiry." target="_blank" class="whatsapp-direct">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <div style="font-size:17px;">Chat on WhatsApp</div>
+                        <div style="font-size:12px; font-weight:400; color:rgba(37,211,102,0.7); letter-spacing:1px;">Fastest response · +91 96004 40850</div>
+                    </div>
+                    <i class="fas fa-arrow-right" style="margin-left:auto; font-size:14px;"></i>
+                </a>
+            </div>
+            <form id="enquiryForm">
+                <div class="form-group">
+                    <input type="text" id="fname" placeholder="Full Name" required>
+                    <label for="fname">Full Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="femail" placeholder="Business Email" required>
+                    <label for="femail">Business Email</label>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="fphone" placeholder="Phone / WhatsApp">
+                    <label for="fphone">Phone / WhatsApp Number</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="fport" placeholder="Port of Discharge">
+                    <label for="fport">Port of Discharge (e.g. Hamburg, Dubai)</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="fcargo" rows="4" placeholder="Cargo Details"></textarea>
+                    <label for="fcargo">Cargo Details (Volume, Weight, Nature)</label>
+                </div>
+                <button type="submit" class="btn-submit"><span>SEND DIRECT ENQUIRY TO MURALI A.</span></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h3>Enquiry Received!</h3>
+            <p>Your details have been recorded. For an instant response, connect with Murali A. directly on WhatsApp right now.</p>
+            <a href="#" id="modalWaBtn" target="_blank" class="modal-wa-btn">
+                <i class="fab fa-whatsapp" style="font-size:24px;"></i>
+                Continue on WhatsApp
+            </a>
+            <button class="modal-close" onclick="closeModal()">I'll wait for email reply</button>
+        </div>
+    </div>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/919600440850?text=Hello%20Murali%2C%20I%20would%20like%20to%20enquire%20about%20your%20logistics%20services." class="whatsapp" target="_blank">
+        <span class="whatsapp-tooltip">Chat with Murali</span>
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 MAKSEL GLOBAL LOGISTICS. Strategic Connectivity from Coimbatore.</p>
+        <div class="footer-socials">
+            <a href="https://wa.me/919600440850" class="footer-social" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:murali@maksel.in" class="footer-social"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+919600440850" class="footer-social"><i class="fas fa-phone"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // ========== HEADER SCROLL ==========
+        window.addEventListener("scroll", () => {
+            document.querySelector("#nav").classList.toggle("scrolled", window.scrollY > 50);
+        });
+
+        // ========== COUNTER ANIMATION ==========
+        let countersStarted = false;
+        function startCounters() {
+            if (countersStarted) return;
+            countersStarted = true;
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const step = Math.ceil(target / 150);
+                const timer = setInterval(() => {
+                    count += step;
+                    if (count >= target) {
+                        counter.innerText = target + (target === 99 ? '%' : '+');
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = count;
+                    }
+                }, 10);
+            });
+        }
+
+        // ========== SCROLL REVEAL ==========
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.closest('.dashboard')) startCounters();
+                    if (entry.target.classList.contains('dashboard')) startCounters();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+        const dashSection = document.querySelector('.dashboard');
+        if (dashSection) {
+            const dashObs = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) startCounters();
+            }, { threshold: 0.3 });
+            dashObs.observe(dashSection);
+        }
+
+        // ========== TESTIMONIAL SLIDER ==========
+        const track = document.getElementById('testiTrack');
+        const cards = track.querySelectorAll('.testi-card');
+        const dotsContainer = document.getElementById('testiDots');
+        let currentSlide = 0;
+        let slidesPerView = window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1;
+        const totalSlides = Math.ceil(cards.length / slidesPerView);
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'testi-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function goToSlide(n) {
+            currentSlide = Math.max(0, Math.min(n, totalSlides - 1));
+            const cardWidth = cards[0].offsetWidth + 30;
+            track.style.transform = `translateX(-${currentSlide * slidesPerView * cardWidth}px)`;
+            document.querySelectorAll('.testi-dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+        }
+
+        document.getElementById('testiNext').onclick = () => goToSlide((currentSlide + 1) % totalSlides);
+        document.getElementById('testiPrev').onclick = () => goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+
+        // Auto-advance
+        setInterval(() => goToSlide((currentSlide + 1) % totalSlides), 5000);
+
+        window.addEventListener('resize', () => {
+            slidesPerView = window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1;
+            goToSlide(0);
+        });
+
+        // ========== CONTACT FORM + WHATSAPP REDIRECT ==========
+        document.getElementById('enquiryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('fname').value;
+            const email = document.getElementById('femail').value;
+            const phone = document.getElementById('fphone').value;
+            const port = document.getElementById('fport').value;
+            const cargo = document.getElementById('fcargo').value;
+
+            // Build WhatsApp message
+            const message = `Hello Murali Sir,\n\nNew enquiry from *${name}*:\n\n📧 Email: ${email}\n📞 Phone: ${phone || 'Not provided'}\n🚢 Port of Discharge: ${port || 'Not specified'}\n📦 Cargo Details: ${cargo || 'Not specified'}\n\nPlease advise on rates and availability. Thank you.`;
+            const encodedMsg = encodeURIComponent(message);
+            const waUrl = `https://wa.me/919600440850?text=${encodedMsg}`;
+
+            // Set modal WA button
+            document.getElementById('modalWaBtn').href = waUrl;
+
+            // Show modal
+            document.getElementById('successModal').classList.add('show');
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('show');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>
